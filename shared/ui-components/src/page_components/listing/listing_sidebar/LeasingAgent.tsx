@@ -1,7 +1,9 @@
 import * as React from "react"
-import Address from "./SidebarAddress"
+import SidebarAddress from "./SidebarAddress"
 import t from "../../../helpers/translator"
-import { Listing } from "@bloom/core/src/listings"
+import Icon from "../../../atoms/Icon"
+import { Listing } from "@bloom-housing/core"
+import { openDateState } from "../../../helpers/state"
 
 interface LeasingAgentProps {
   listing: Listing
@@ -10,33 +12,37 @@ interface LeasingAgentProps {
 const LeasingAgent = (props: LeasingAgentProps) => {
   const listing = props.listing
 
-  const phoneNumber = `tel:${listing.leasingAgentPhone.replace(/[-()]/g, "")}`
-  const leasingAgentAddress = {
-    streetAddress: listing.leasingAgentStreet,
-    city: listing.leasingAgentCity,
-    state: listing.leasingAgentState,
-    zipCode: listing.leasingAgentZip
+  if (openDateState(listing)) {
+    return null
   }
 
+  const phoneNumber = `tel:${listing.leasingAgentPhone.replace(/[-()]/g, "")}`
+
   return (
-    <>
-      <h4 className="text-caps-underline">Contact Leasing Agent</h4>
+    <section className="aside-block border-b-0 -mx-4 -mb-4 md:mx-0 md:mb-0 md:border-b">
+      <h4 className="text-caps-underline">{t("leasingAgent.contact")}</h4>
 
       <p className="text-xl">{listing.leasingAgentName}</p>
       <p className="text-gray-700">{listing.leasingAgentTitle}</p>
 
       <p className="mt-5">
-        <a href={phoneNumber}>Call {listing.leasingAgentPhone}</a>
+        <a href={phoneNumber}>
+          <Icon symbol="phone" size="medium" /> {t("label.call")} {listing.leasingAgentPhone}
+        </a>
       </p>
       <p className="text-sm text-gray-700">{t("leasingAgent.dueToHighCallVolume")}</p>
 
       <p className="my-5">
-        <a href={`mailto:${listing.leasingAgentEmail}`}>Email</a>
+        <a href={`mailto:${listing.leasingAgentEmail}`}>
+          <Icon symbol="mail" size="medium" /> {t("label.email")}
+        </a>
       </p>
-
-      <Address address={leasingAgentAddress} officeHours={listing.leasingAgentOfficeHours} />
-    </>
+      <SidebarAddress
+        address={listing.leasingAgentAddress}
+        officeHours={listing.leasingAgentOfficeHours}
+      />
+    </section>
   )
 }
 
-export default LeasingAgent
+export { LeasingAgent as default, LeasingAgent }

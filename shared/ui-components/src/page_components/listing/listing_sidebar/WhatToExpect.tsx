@@ -1,34 +1,43 @@
 import * as React from "react"
+import t from "../../../helpers/translator"
+import { Listing } from "@bloom-housing/core"
 
-const WhatToExpect = () => {
+interface WhatToExpectProps {
+  listing: Listing
+}
+
+const WhatToExpect = (props: WhatToExpectProps) => {
+  const listing = props.listing
+  let applicantsWillBeContacted = listing?.whatToExpect?.applicantsWillBeContacted
+  let allInfoWillBeVerified = listing?.whatToExpect?.allInfoWillBeVerified
+  let bePreparedIfChosen = listing?.whatToExpect?.bePreparedIfChosen
+
+  applicantsWillBeContacted =
+    applicantsWillBeContacted || applicantsWillBeContacted == ""
+      ? applicantsWillBeContacted
+      : t("whatToExpect.applicantsWillBeContacted")
+
+  allInfoWillBeVerified =
+    allInfoWillBeVerified || allInfoWillBeVerified == ""
+      ? allInfoWillBeVerified
+      : t("whatToExpect.allInfoWillBeVerified")
+
+  bePreparedIfChosen =
+    bePreparedIfChosen || bePreparedIfChosen == ""
+      ? bePreparedIfChosen
+      : t("whatToExpect.bePreparedIfChosen")
+
   return (
-    <>
-      <h4 className="text-caps-underline">What to Expect</h4>
-
-      <p className="text-tiny text-gray-800">
-        Applicants will be contacted by the property agent in waitlist order until vacancies are
-        filled.
-      </p>
-
+    <section className="aside-block -mx-4 pt-0 md:mx-0 md:pt-4">
+      <h4 className="text-caps-underline">{t("whatToExpect.label")}</h4>
+      <p className="text-tiny text-gray-800">{applicantsWillBeContacted}</p>
       <details className="disclosure">
         <summary>read more</summary>
-
-        <p className="text-tiny text-gray-800">
-          All of the information that you have provided will be verified and your eligibility
-          confirmed. Your application will be removed from the waitlist if you have made any
-          fraudulent statements, or if any household member appears on more than one application for
-          this listing. If we cannot verify a housing preference that you have claimed, you will not
-          receive the preference but will not be otherwise penalized.
-        </p>
-
-        <p className="text-tiny text-gray-800">
-          Should your application be chosen from the waitlist, be prepared to fill out a more
-          detailed application and provide required supporting documents within 5 business days of
-          being contacted.
-        </p>
+        <p className="text-tiny text-gray-800">{allInfoWillBeVerified}</p>
+        <p className="text-tiny text-gray-800">{bePreparedIfChosen}</p>
       </details>
-    </>
+    </section>
   )
 }
 
-export default WhatToExpect
+export { WhatToExpect as default, WhatToExpect }

@@ -1,18 +1,18 @@
 import * as React from "react"
 import LocalizedLink from "../../atoms/LocalizedLink"
 
-interface SiteHeaderProps {
+export interface SiteHeaderProps {
   logoSrc: string
   title: string
-  notice: string
+  notice: string | React.ReactNode
   children: React.ReactNode
 }
 
-interface SiteHeaderState {
+export interface SiteHeaderState {
   active: boolean
 }
 
-interface NavbarDropdownProps {
+export interface NavbarDropdownProps {
   menuTitle: string
   children: React.ReactNode
 }
@@ -54,9 +54,7 @@ class SiteHeader extends React.Component<SiteHeaderProps, SiteHeaderState> {
   }
 
   handleMenuToggle = () => {
-    this.setState((state: SiteHeaderState, props: SiteHeaderProps) => ({
-      active: !state.active
-    }))
+    this.setState({ active: !this.state.active })
   }
 
   hamburgerMenu() {
@@ -80,23 +78,24 @@ class SiteHeader extends React.Component<SiteHeaderProps, SiteHeaderState> {
     return (
       <>
         {this.noticeBar()}
+        <div className="navbar__wrapper">
+          <nav className="navbar" role="navigation" aria-label="main navigation">
+            <div className="navbar-brand">
+              {this.logo()}
+              {this.hamburgerMenu()}
+            </div>
 
-        <nav className="navbar" role="navigation" aria-label="main navigation">
-          <div className="navbar-brand">
-            {this.logo()}
-            {this.hamburgerMenu()}
-          </div>
-
-          <div
-            id="navbarMenuLinks"
-            className={"navbar-menu mt-3 md:mt-0" + (this.state.active ? " is-active" : "")}
-          >
-            <div className="navbar-end">{this.props.children}</div>
-          </div>
-        </nav>
+            <div
+              id="navbarMenuLinks"
+              className={"navbar-menu mt-3 md:mt-0" + (this.state.active ? " is-active" : "")}
+            >
+              <div className="navbar-end">{this.props.children}</div>
+            </div>
+          </nav>
+        </div>
       </>
     )
   }
 }
 
-export default SiteHeader
+export { SiteHeader as default, SiteHeader }

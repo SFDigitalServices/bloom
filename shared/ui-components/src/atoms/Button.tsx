@@ -1,9 +1,10 @@
 import * as React from "react"
 import "./Button.scss"
 
-interface ButtonProps {
+export interface ButtonProps {
   children: React.ReactNode
   className?: string
+  big?: boolean
   filled?: boolean
   normalCase?: boolean
   onClick: (e: React.MouseEvent) => void
@@ -12,9 +13,10 @@ interface ButtonProps {
 
 const Button = (props: ButtonProps) => {
   const buttonClasses = ["button"]
-  if (props.filled) buttonClasses.push("filled")
-  if (props.normalCase) buttonClasses.push("normal-case")
-  if (props.small) buttonClasses.push("small")
+  if (props.filled) buttonClasses.push("is-filled")
+  if (props.normalCase) buttonClasses.push("is-normal-case")
+  if (props.small) buttonClasses.push("is-small")
+  if (props.big) buttonClasses.push("is-big")
   if (props.className) buttonClasses.push(props.className)
 
   return (
@@ -24,4 +26,4 @@ const Button = (props: ButtonProps) => {
   )
 }
 
-export default Button
+export { Button as default, Button }

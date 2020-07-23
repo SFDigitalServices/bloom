@@ -1,44 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Atoms|LinkButton default 1`] = `
-<LinkButton
-  href="#"
->
-  <LocalizedLink
-    className="button"
-    href="#"
-  >
-    <Link
-      href="/{{ Missing Translation Phrases }}#"
-    >
-      <a
-        className="button"
-        href="/{{ Missing Translation Phrases }}#"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-      >
-        LinkButton w/Link
-      </a>
-    </Link>
-  </LocalizedLink>
-</LinkButton>
-`;
-
-exports[`Storyshots Atoms|LinkButton filled 1`] = `
+exports[`Storyshots Atoms|LinkButton Filled 1`] = `
 <LinkButton
   filled={true}
   href="#"
 >
   <LocalizedLink
-    className="button filled"
+    className="button is-filled"
     href="#"
   >
     <Link
-      href="/{{ Missing Translation Phrases }}#"
+      href="#"
     >
       <a
-        className="button filled"
-        href="/{{ Missing Translation Phrases }}#"
+        className="button is-filled"
+        href="#"
         onClick={[Function]}
         onMouseEnter={[Function]}
       >
@@ -49,21 +25,21 @@ exports[`Storyshots Atoms|LinkButton filled 1`] = `
 </LinkButton>
 `;
 
-exports[`Storyshots Atoms|LinkButton regular case 1`] = `
+exports[`Storyshots Atoms|LinkButton Regular Case 1`] = `
 <LinkButton
   href="#"
   normalCase={true}
 >
   <LocalizedLink
-    className="button normal-case"
+    className="button is-normal-case"
     href="#"
   >
     <Link
-      href="/{{ Missing Translation Phrases }}#"
+      href="#"
     >
       <a
-        className="button normal-case"
-        href="/{{ Missing Translation Phrases }}#"
+        className="button is-normal-case"
+        href="#"
         onClick={[Function]}
         onMouseEnter={[Function]}
       >
@@ -74,21 +50,21 @@ exports[`Storyshots Atoms|LinkButton regular case 1`] = `
 </LinkButton>
 `;
 
-exports[`Storyshots Atoms|LinkButton small 1`] = `
+exports[`Storyshots Atoms|LinkButton Small 1`] = `
 <LinkButton
   href="#"
   small={true}
 >
   <LocalizedLink
-    className="button small"
+    className="button is-small"
     href="#"
   >
     <Link
-      href="/{{ Missing Translation Phrases }}#"
+      href="#"
     >
       <a
-        className="button small"
-        href="/{{ Missing Translation Phrases }}#"
+        className="button is-small"
+        href="#"
         onClick={[Function]}
         onMouseEnter={[Function]}
       >
@@ -99,26 +75,50 @@ exports[`Storyshots Atoms|LinkButton small 1`] = `
 </LinkButton>
 `;
 
-exports[`Storyshots Atoms|LinkButton small and filled 1`] = `
+exports[`Storyshots Atoms|LinkButton Small And Filled 1`] = `
 <LinkButton
   filled={true}
   href="#"
   small={true}
 >
   <LocalizedLink
-    className="button filled small"
+    className="button is-filled is-small"
     href="#"
   >
     <Link
-      href="/{{ Missing Translation Phrases }}#"
+      href="#"
     >
       <a
-        className="button filled small"
-        href="/{{ Missing Translation Phrases }}#"
+        className="button is-filled is-small"
+        href="#"
         onClick={[Function]}
         onMouseEnter={[Function]}
       >
         Small and Filled LinkButton
+      </a>
+    </Link>
+  </LocalizedLink>
+</LinkButton>
+`;
+
+exports[`Storyshots Atoms|LinkButton Standard 1`] = `
+<LinkButton
+  href="#"
+>
+  <LocalizedLink
+    className="button"
+    href="#"
+  >
+    <Link
+      href="#"
+    >
+      <a
+        className="button"
+        href="#"
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+      >
+        LinkButton w/Link
       </a>
     </Link>
   </LocalizedLink>

@@ -6,36 +6,48 @@
 @import url("https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic");
 
 html {
-  -webkit-font-smoothing: antialiased;
+  @apply antialiased;
 }
 
 body {
   @apply font-sans;
   @apply bg-white;
+  @apply text-gray-900;
 }
 
 .-top {
   top: -0.8rem;
 }
 
+main {
+
+}
+
 // Sticky footer\
 html {
-  height: 100%;
+  @apply h-full;
 
   body {
-    display: table;
-    height: 100%;
-    width: 100%;
+    @apply table;
+    @apply h-full;
+    @apply w-full;
   }
 
   .site-container {
-    display: table-row;
-    height: 100%;
+    @apply table-row;
+    @apply h-full;
   }
 
   .footer-section {
-    display: table-row;
+    @apply table-row;
     height: 1px;
+  }
+}
+
+html,
+body {
+  @screen md {
+    @apply overflow-x-hidden;
   }
 }
 
@@ -43,8 +55,11 @@ html {
 @import "markdown.scss";
 @import "navbar.scss";
 @import "text.scss";
+@import "headers.scss";
+@import "blocks.scss";
 @import "accordion.scss";
 @import "custom_counter.scss";
+@import "forms.scss";
 @import "lists.scss";
 @import "tables.scss";
 @import "homepage.scss";

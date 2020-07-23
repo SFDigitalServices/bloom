@@ -1,23 +1,62 @@
 import * as React from "react"
+import t from "../../../helpers/translator"
+import { Listing } from "@bloom-housing/core"
 
-const WaitlistItem = (props: any) => (
-  <li className={"uppercase text-gray-800 text-tiny " + props.class_name}>
+const WaitlistItem = (props: { className?: string; value: number; text: string }) => (
+  <li className={`uppercase text-gray-800 text-tiny ${props.className}`}>
     <span className="text-right w-12 inline-block pr-2">{props.value}</span>
     <span>{props.text}</span>
   </li>
 )
 
-const Waitlist = (props: any) => {
-  const listing = props.listing
-  const waitlistOpen = listing.waitlistCurrentSize < listing.waitlistMaxSize
-  const header = waitlistOpen ? "Waitlist open" : "Waitlist closed"
-  let availableUnitsInfo
+export interface WaitlistProps {
+  listing: Listing
+}
 
-  if (listing.unitsAvailable == 0) {
-    availableUnitsInfo = (
-      <p className="text-sm italic text-gray-700 pb-3">
-        There are no available units at this time.
-      </p>
+const Waitlist = (props: WaitlistProps) => {
+  const listing = props.listing
+  const showWaitlistValues = listing.waitlistCurrentSize != null && listing.waitlistMaxSize != null
+  const waitlistOpen = listing.waitlistCurrentSize < listing.waitlistMaxSize
+  let header, subheader, waitlistItems
+
+  if (listing.unitsAvailable > 0 && waitlistOpen) {
+    header = t("listings.waitlist.unitsAndWaitlist")
+    subheader = t("listings.waitlist.submitAnApplication")
+    waitlistItems = (
+      <>
+        <WaitlistItem
+          value={listing.unitsAvailable}
+          text={t("listings.availableUnits")}
+          className={"font-semibold"}
+        />
+        <WaitlistItem
+          value={listing.waitlistMaxSize - listing.waitlistCurrentSize}
+          text={t("listings.waitlist.openSlots")}
+          className={"font-semibold"}
+        />
+      </>
+    )
+  } else {
+    if (waitlistOpen) {
+      header = t("listings.waitlist.isOpen")
+      subheader = t("listings.waitlist.submitForWaitlist")
+    } else {
+      header = t("listings.waitlist.closed")
+      subheader = null
+    }
+    waitlistItems = (
+      <>
+        <WaitlistItem
+          value={listing.waitlistCurrentSize}
+          text={t("listings.waitlist.currentSize")}
+        />
+        <WaitlistItem
+          value={listing.waitlistMaxSize - listing.waitlistCurrentSize}
+          text={t("listings.waitlist.openSlots")}
+          className={"font-semibold"}
+        />
+        <WaitlistItem value={listing.waitlistMaxSize} text={t("listings.waitlist.finalSize")} />
+      </>
     )
   }
 
@@ -25,23 +64,11 @@ const Waitlist = (props: any) => {
     <>
       <h4 className="text-caps-tiny">{header}</h4>
       <div>
-        {availableUnitsInfo}
-        <p className="text-tiny text-gray-800 pb-3">
-          Submit an application for an open slot on the waitlist for {listing.buildingTotalUnits}{" "}
-          units.
-        </p>
-        <ul>
-          <WaitlistItem value={listing.waitlistCurrentSize} text={"current waitlist size"} />
-          <WaitlistItem
-            value={listing.waitlistMaxSize - listing.waitlistCurrentSize}
-            text={"open waitlist slots"}
-            class_name={"font-semibold"}
-          />
-          <WaitlistItem value={listing.waitlistMaxSize} text={"final waitlist size"} />
-        </ul>
+        {subheader && <p className="text-tiny text-gray-800 pb-3">{subheader}</p>}
+        {showWaitlistValues && <ul>{waitlistItems}</ul>}
       </div>
     </>
   )
 }
 
-export default Waitlist
+export { Waitlist as default, Waitlist }

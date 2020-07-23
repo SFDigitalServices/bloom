@@ -1,52 +1,66 @@
 import * as React from "react"
 import ImageCard from "../../cards/ImageCard"
-import { Listing } from "@bloom/core/src/listings"
+import { Listing } from "@bloom-housing/core"
 import LinkButton from "../../atoms/LinkButton"
-import { BasicTable } from "@bloom/ui-components/src/tables/basic_table"
-import t from "@bloom/ui-components/src/helpers/translator"
+import { groupNonReservedAndReservedSummaries } from "../../helpers/tableSummaries"
+import {
+  GroupedTable,
+  GroupedTableGroup,
+} from "@bloom-housing/ui-components/src/tables/GroupedTable"
+import t from "@bloom-housing/ui-components/src/helpers/translator"
+import "./ListingsList.scss"
 
 export interface ListingsProps {
   listings: Listing[]
-  unitSummariesTable: any
 }
 
 const ListingsList = (props: ListingsProps) => {
   const listings = props.listings
 
-  const listItems = listings.map(listing => {
+  const listItems = listings.map((listing: Listing) => {
     const imageUrl = listing.imageUrl || ""
     const unitSummariesHeaders = {
       unitType: t("t.unitType"),
       minimumIncome: t("t.minimumIncome"),
-      rent: t("t.rent")
+      rent: t("t.rent"),
     }
-    const unitSummaries = props.unitSummariesTable(listing)
+
+    let unitSummaries = [] as GroupedTableGroup[]
+    if (listing.unitsSummarized !== undefined) {
+      unitSummaries = groupNonReservedAndReservedSummaries(
+        listing.unitsSummarized.byNonReservedUnitType,
+        listing.unitsSummarized.byReservedType
+      )
+    }
 
     return (
-      <article key={listing.id} className="flex flex-row flex-wrap max-w-5xl m-auto mb-12">
-        <div className="w-full md:w-6/12 p-3">
+      <article key={listing.id} className="listings-row">
+        <div className="listings-row_figure">
           <ImageCard
             title={listing.name}
             imageUrl={imageUrl}
             href={`listing/id=${listing.id}`}
             as={`/listing/${listing.id}`}
-            date={listing.applicationDueDate}
+            listing={listing}
           />
         </div>
-        <div className="w-full md:w-6/12 p-3">
-          <h4 className="font-alt-sans font-semibold text-gray-900 text-base mb-2">
-            {t("listings.openWaitlist")}
-          </h4>
-          <div className="mb-4">
-            <BasicTable
-              headers={unitSummariesHeaders}
-              data={unitSummaries}
-              responsiveCollapse={true}
-              cellPadding="p-3"
-            />
+        <div className="listings-row_content">
+          <h4 className="listings-row_title">{t("listings.waitlist.open")}</h4>
+          <div className="listings-row_table">
+            {unitSummaries && (
+              <GroupedTable
+                headers={unitSummariesHeaders}
+                data={unitSummaries}
+                responsiveCollapse={true}
+                cellClassName="p-3"
+              />
+            )}
           </div>
-          <LinkButton href={`listing/id=${listing.id}`} as={`/listing/${listing.id}`}>
-            See Details
+          <LinkButton
+            href={`listing/id=${listing.id}`}
+            as={`/listing/${listing.id}/${listing.urlSlug}`}
+          >
+            {t("label.seeDetails")}
           </LinkButton>
         </div>
       </article>
@@ -56,4 +70,4 @@ const ListingsList = (props: ListingsProps) => {
   return <>{listItems}</>
 }
 
-export default ListingsList
+export { ListingsList as default, ListingsList }

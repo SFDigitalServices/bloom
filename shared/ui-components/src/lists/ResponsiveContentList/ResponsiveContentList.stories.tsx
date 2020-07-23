@@ -1,13 +1,18 @@
 import * as React from "react"
-import { storiesOf } from "@storybook/react"
+import { withA11y } from "@storybook/addon-a11y"
 import {
   ResponsiveContentList,
   ResponsiveContentItem,
   ResponsiveContentItemHeader,
-  ResponsiveContentItemBody
+  ResponsiveContentItemBody,
 } from "./ResponsiveContentList"
 
-storiesOf("Sections|ResponsiveContentList", module).add("with content items", () => (
+export default {
+  title: "Sections|ResponsiveContentList",
+  decorators: [withA11y],
+}
+
+export const withContentItems = () => (
   <ResponsiveContentList>
     <ResponsiveContentItem>
       <ResponsiveContentItemHeader>
@@ -31,4 +36,4 @@ storiesOf("Sections|ResponsiveContentList", module).add("with content items", ()
       </ResponsiveContentItemBody>
     </ResponsiveContentItem>
   </ResponsiveContentList>
-))
+)

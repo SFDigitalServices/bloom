@@ -1,25 +1,27 @@
 {
-  "name": "@bloom/core",
-  "version": "0.0.1",
+  "name": "@bloom-housing/core",
+  "version": "0.2.11",
   "description": "Shared types for Bloom affordable housing system",
+  "homepage": "https://github.com/bloom-housing/bloom/tree/master/shared/core",
   "main": "index.js",
   "license": "GPL-3.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "test": "jest"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.18",
-    "babel-jest": "^24.9.0",
-    "babel-loader": "^8.0.6",
-    "jest": "^24.9.0",
-    "typescript": "^3.6.2",
-    "webpack": "^4.39.1"
+    "@babel/core": "^7.10.5",
+    "@types/jest": "^25.2.2",
+    "babel-jest": "^25.5.1",
+    "babel-loader": "^8.1.0",
+    "jest": "^25.5.4",
+    "typescript": "^3.9.7",
+    "webpack": "^4.43.0"
   },
   "dependencies": {
-    "@types/node": "^12.7.1",
+    "@types/node": "^12.12.50",
     "@types/node-polyglot": "^0.4.34",
-    "nanoid": "^2.1.1"
+    "nanoid": "^3.1.10"
   },
   "babel": {
     "presets": [

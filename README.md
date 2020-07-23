@@ -7,8 +7,11 @@ This is the repository for the Bloom affordable housing system.
 An overview of the system will go here.
 
 ### Applications
+
 ### Services
+
 ### Shared Libraries
+
 - UI Components
 - Styles
 
@@ -29,16 +32,26 @@ yarn install
 N/A for the time being.
 
 ### Running a Local Test Server
+
 ```
 yarn dev:all
 ```
 
 ### Running Tests
+
 ```
 yarn test:all
 ```
 
+### Versioning
+
+We are using [lerna](https://lerna.js.org/) as a package versioning tool. It helps with keeping multiple package versions in sync.
+To upgrade version, first commit your changes to feature branch and push it to github. Then run
+```
+yarn new-version
+```
+It will upgrade dependencies, commit them to github and create a release with a tag.
+
 ## Contributing
 
 Contributions to the core Bloom applications and services are welcomed. To help us meet the project's goals around quality and maintainability, we ask that all contributors read, understand, and agree to these guidelines.
-

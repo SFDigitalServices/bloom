@@ -1,9 +1,11 @@
 import * as React from "react"
 import ReactDOMServer from "react-dom/server"
-import { Address } from "@bloom/core/src/general"
+import Icon from "../../../atoms/Icon"
+import { Address } from "@bloom-housing/core"
 import { OneLineAddress, MultiLineAddress } from "../../../helpers/address"
+import t from "../../../helpers/translator"
 
-interface SidebarAddressProps {
+export interface SidebarAddressProps {
   address: Address
   officeHours?: string
 }
@@ -14,7 +16,7 @@ const SidebarAddress = (props: SidebarAddressProps) => {
   let googleMapsHref = ""
   let hours = <></>
 
-  if (address.streetAddress) {
+  if (address.street) {
     const oneLineAddress = <OneLineAddress address={address} />
     mainAddress = <MultiLineAddress address={address} />
 
@@ -25,7 +27,7 @@ const SidebarAddress = (props: SidebarAddressProps) => {
   if (officeHours) {
     hours = (
       <>
-        <h3 className="text-caps-tiny ">Office Hours</h3>
+        <h3 className="text-caps-tiny ">{t("leasingAgent.officeHours")}</h3>
         <p className="text-gray-800">{officeHours}</p>
       </>
     )
@@ -33,12 +35,12 @@ const SidebarAddress = (props: SidebarAddressProps) => {
 
   return (
     <>
-      {address.streetAddress && (
+      {address.street && (
         <p className="text-gray-700 mb-4">
           {mainAddress}
           <br />
           <a href={googleMapsHref} target="_blank">
-            Get Directions
+            <Icon symbol="map" size="medium" /> {t("label.getDirections")}
           </a>
         </p>
       )}
@@ -47,4 +49,4 @@ const SidebarAddress = (props: SidebarAddressProps) => {
   )
 }
 
-export default SidebarAddress
+export { SidebarAddress as default, SidebarAddress }

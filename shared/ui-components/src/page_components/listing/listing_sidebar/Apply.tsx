@@ -1,19 +1,19 @@
 import React, { useState } from "react"
-import { Listing } from "@bloom/core/src/listings"
+import { Listing, Attachment, AttachmentType } from "@bloom-housing/core"
+import moment from "moment"
+import t from "../../../helpers/translator"
 import Button from "../../../atoms/Button"
+import LinkButton from "../../../atoms/LinkButton"
 import SidebarAddress from "./SidebarAddress"
+import { openDateState } from "../../../helpers/state"
 
-interface ApplyProps {
+export interface ApplyProps {
   listing: Listing
 }
 
 const OrDivider = (props: { bgColor: string }) => (
-  <div className="-mx-5 mt-6 mb-2 border-t border-gray-400 text-center">
-    <span
-      className={`bg-${props.bgColor} relative -top px-1 uppercase text-blue-700 font-semibold`}
-    >
-      or
-    </span>
+  <div className="aside-block__divider">
+    <span className={`bg-${props.bgColor} aside-block__conjunction`}>or</span>
   </div>
 )
 
@@ -28,79 +28,117 @@ const NumberedHeader = (props: { num: number; text: string }) => (
 
 const Apply = (props: ApplyProps) => {
   const { listing } = props
-
-  const leasingAgentAddress = () => ({
-    streetAddress: listing.leasingAgentStreet,
-    city: listing.leasingAgentCity,
-    state: listing.leasingAgentState,
-    zipCode: listing.leasingAgentZip
-  })
-  const applicationAddress = () => ({
-    streetAddress: listing.applicationStreetAddress,
-    city: listing.applicationCity,
-    state: listing.applicationState,
-    zipCode: listing.applicationPostalCode
-  })
+  let onlineApplicationUrl = ""
 
   const [showDownload, setShowDownload] = useState(false)
   const toggleDownload = () => setShowDownload(!showDownload)
 
+  const openDate = moment(listing.applicationOpenDate).format("MMMM D, YYYY")
+
+  if (listing.acceptingOnlineApplications) {
+    const onlineApplicationAttachment = listing.attachments.filter((attachment: Attachment) => {
+      return attachment.type == AttachmentType.ExternalApplication
+    })[0]
+    if (onlineApplicationAttachment) {
+      onlineApplicationUrl = onlineApplicationAttachment.fileUrl
+    }
+  }
+
   return (
     <>
-      <section className="border border-gray-400 border-b-0 p-5">
-        <h2 className="font-alt-sans uppercase text-tiny mb-5 pb-2 border-0 border-b-4 border-primary font-semibold text-gray-800 tracking-widest inline-block">
-          How to Apply
-        </h2>
-        <NumberedHeader num={1} text="Get a Paper Application" />
-        <Button filled className="w-full mb-2" onClick={toggleDownload}>
-          Download Application
-        </Button>
-        {showDownload && (
-          <p className="text-center mt-2 mb-4 text-sm">
-            <a href={listing.applicationDownloadUrl} title="Download Application" target="_blank">
-              English
-            </a>
+      <section className="aside-block">
+        <h2 className="text-caps-underline">{t("listings.apply.howToApply")}</h2>
+
+        {openDateState(listing) && (
+          <p className="mb-5 text-gray-700">
+            {t("listings.apply.applicationWillBeAvailableOn", { openDate: openDate })}
           </p>
         )}
+        {!openDateState(listing) &&
+          ((listing.acceptingOnlineApplications && (
+            <>
+              <LinkButton filled className="w-full mb-2" href={onlineApplicationUrl}>
+                {t("listings.apply.applyOnline")}
+              </LinkButton>
+            </>
+          )) ||
+            (!listing.acceptingOnlineApplications && (
+              <>
+                <NumberedHeader num={1} text={t("listings.apply.getAPaperApplication")} />
+                <Button filled className="w-full mb-2" onClick={toggleDownload}>
+                  {t("listings.apply.downloadApplication")}
+                </Button>
+              </>
+            )))}
+
+        {showDownload &&
+          listing.attachments
+            .filter((attachment: Attachment) => {
+              return attachment.type == AttachmentType.ApplicationDownload
+            })
+            .map((attachment: Attachment) => (
+              <p key={attachment.fileUrl} className="text-center mt-2 mb-4 text-sm">
+                <a
+                  href={attachment.fileUrl}
+                  title={t("listings.apply.downloadApplication")}
+                  target="_blank"
+                >
+                  {attachment.label}
+                </a>
+              </p>
+            ))}
+
         {listing.blankPaperApplicationCanBePickedUp && (
           <>
-            <OrDivider bgColor="white" />
-            <SubHeader text="Pick up an application" />
+            {!openDateState(listing) && <OrDivider bgColor="white" />}
+            <SubHeader text={t("listings.apply.pickUpAnApplication")} />
             <SidebarAddress
-              address={leasingAgentAddress()}
-              officeHours={listing.leasingAgentOfficeHours}
+              address={listing.applicationPickUpAddress || listing.leasingAgentAddress}
+              officeHours={
+                listing.applicationPickUpAddressOfficeHours || listing.leasingAgentOfficeHours
+              }
             />
           </>
         )}
       </section>
 
-      <section className="border-gray-400 border-b border-t p-5 bg-gray-100">
-        <NumberedHeader num={2} text="Submit a Paper Application" />
-        {listing.acceptingApplicationsByPoBox && (
-          <>
-            <SubHeader text="Send Application by US Mail" />
-            <p className="text-gray-700">{listing.applicationOrganization}</p>
-            <SidebarAddress address={applicationAddress()} />
-            <p className="mt-4 text-tiny text-gray-750">
-              Applications must be received by the deadline and postmarks will not be considered.
-            </p>
-          </>
-        )}
-        {listing.acceptingApplicationsByPoBox && listing.acceptingApplicationsAtLeasingAgent && (
-          <OrDivider bgColor="gray-100" />
-        )}
-        {listing.acceptingApplicationsAtLeasingAgent && (
-          <>
-            <SubHeader text="Drop Off Application" />
-            <SidebarAddress
-              address={leasingAgentAddress()}
-              officeHours={listing.leasingAgentOfficeHours}
-            />
-          </>
-        )}
-      </section>
+      {(listing.acceptingApplicationsByPoBox || listing.acceptingApplicationsAtLeasingAgent) && (
+        <section className="aside-block bg-gray-100">
+          <NumberedHeader num={2} text={t("listings.apply.submitAPaperApplication")} />
+          {listing.acceptingApplicationsByPoBox && (
+            <>
+              <SubHeader text={t("listings.apply.sendByUsMail")} />
+              <p className="text-gray-700">{listing.applicationOrganization}</p>
+              <SidebarAddress address={listing.applicationAddress} />
+              <p className="mt-4 text-tiny text-gray-750">
+                {listing.acceptsPostmarkedApplications
+                  ? t("listings.apply.postmarkedApplicationsMustBeReceivedByDate", {
+                      applicationDueDate: moment(listing.applicationDueDate).format("MMM DD, YYYY"),
+                      postmarkReceivedByDate: moment(
+                        listing.postmarkedApplicationsReceivedByDate
+                      ).format("MMM DD, YYYY"),
+                      developer: listing.developer,
+                    })
+                  : t("listings.apply.applicationsMustBeReceivedByDeadline")}
+              </p>
+            </>
+          )}
+          {listing.acceptingApplicationsByPoBox && listing.acceptingApplicationsAtLeasingAgent && (
+            <OrDivider bgColor="gray-100" />
+          )}
+          {listing.acceptingApplicationsAtLeasingAgent && (
+            <>
+              <SubHeader text={t("listings.apply.dropOffApplication")} />
+              <SidebarAddress
+                address={listing.leasingAgentAddress}
+                officeHours={listing.leasingAgentOfficeHours}
+              />
+            </>
+          )}
+        </section>
+      )}
     </>
   )
 }
 
-export default Apply
+export { Apply as default, Apply }

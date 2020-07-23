@@ -1,33 +1,50 @@
-
-.custom-counter_item {
+.custom-counter__item {
   @screen md {
+    @apply mb-12;
+    @apply ml-8;
+    @apply pl-12;
+    @apply relative;
     counter-increment: step-counter;
-    margin-bottom: 3rem;
-    margin-left: 2rem;
-    padding-left: 3rem;
-    position: relative;
   }
 }
 
-.custom-counter_item::before {
+.custom-counter__item::before {
   @screen md {
-    position: absolute;
+    @apply absolute;
+    @apply font-serif;
+    @apply text-gray-850;
     top: 0;
     left: -1rem;
     content: counter(step-counter);
     margin-right: 5px;
-    color: #333;
     font-size: 4.375rem;
     line-height: 0.85;
-    font-family: "Droid Serif", Georgia, Times, serif;
   }
 }
 
-.custom-counter_header {
+.custom-counter__header {
+  @apply pb-4;
+
   @screen md {
-    border-left: 2px solid #dedee0;
-    margin-bottom: 2rem;
-    margin-left: -1rem;
-    padding-left: 1rem;
+    @apply -ml-4;
+    @apply pl-4;
+    @apply border-solid;
+    @apply border-l-2;
+    @apply border-gray-450;
+    @apply mb-4;
+    @apply mt-4;
   }
+}
+
+.custom-counter__title {
+  @apply text-lg;
+
+  @screen md {
+    @apply text-xl;
+  }
+}
+
+.custom-counter__subtitle {
+  @apply text-gray-700;
+  @apply text-tiny;
 }

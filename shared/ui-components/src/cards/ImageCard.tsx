@@ -1,44 +1,41 @@
 import * as React from "react"
 import LocalizedLink from "../atoms/LocalizedLink"
-import ApplicationDeadline from "@bloom/ui-components/src/page_components/listing/listing_sidebar/ApplicationDeadline"
+import ApplicationStatus from "@bloom-housing/ui-components/src/atoms/ApplicationStatus"
 import "./ImageCard.scss"
+import { Listing } from "@bloom-housing/core"
 
-const Flag = (props: any) => <div>{props.text}</div>
-
-interface ImageCardProps {
-  flag?: string
+export interface ImageCardProps {
   imageUrl: string
   subtitle?: string
   title: string
   href?: string
   as?: string
-  date?: string
+  listing?: Listing
 }
 
 const ImageCard = (props: ImageCardProps) => {
   let statusLabel
 
-  if (props.date) {
+  if (props.listing) {
     statusLabel = (
-      <figcaption className="absolute inset-x-0 top-0 mt-2">
-        <span className="inline-block">
-          <ApplicationDeadline date={props.date} vivid />
-        </span>
-      </figcaption>
+      <aside className="image-card__status">
+        <ApplicationStatus listing={props.listing} vivid />
+      </aside>
     )
   }
 
   const image = (
-    <figure className="relative">
-      {props.imageUrl && <img src={props.imageUrl} alt={props.title} />}
-      {!props.imageUrl && <div style={{ height: "300px", background: "#ccc" }}></div>}
-      {props.flag && <Flag text={props.flag} />}
+    <div className="image-card__wrapper">
+      <figure className="image-card">
+        {props.imageUrl && <img src={props.imageUrl} alt={props.title} />}
+        {!props.imageUrl && <div style={{ height: "300px", background: "#ccc" }}></div>}
+        <figcaption className="image-card__figcaption">
+          <h2 className="image-card__title">{props.title}</h2>
+          <p>{props.subtitle}</p>
+        </figcaption>
+      </figure>
       {statusLabel}
-      <figcaption className="image-card__figcaption">
-        <h2 className="image-card__title">{props.title}</h2>
-        <p>{props.subtitle}</p>
-      </figcaption>
-    </figure>
+    </div>
   )
 
   let card = image
@@ -54,4 +51,4 @@ const ImageCard = (props: ImageCardProps) => {
   return card
 }
 
-export default ImageCard
+export { ImageCard as default, ImageCard }

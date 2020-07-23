@@ -1,39 +1,63 @@
 {
-  "name": "bloom",
-  "version": "0.0.1",
+  "name": "bloom-housing",
+  "version": "0.2.12",
   "description": "Bloom is a system to manage processes for affordable housing",
-  "workspaces": [
-    "shared/ui-components",
-    "apps/public",
-    "services/listings",
-    "shared/core"
-  ],
+  "workspaces": {
+    "packages": [
+      "shared/core",
+      "shared/ui-components",
+      "apps/public-reference",
+      "apps/partners-reference",
+      "services/listings",
+      "backend/core"
+    ],
+    "nohoist": [
+      "**/@types/mocha",
+      "**/@types/jest",
+      "**/@types/gl-matrix"
+    ]
+  },
   "repository": "https://github.com/Exygy/bloom.git",
   "license": "GPL-3.0",
   "private": true,
   "scripts": {
-    "dev:app:public": "export $(cat services/listings/.env | xargs) && wait-on \"http://localhost:${PORT:-3001}/\" && cd apps/public && yarn dev",
-    "test:app:public": "export $(cat services/listings/.env | xargs) && wait-on \"http://localhost:${PORT:-3001}/\" && cd apps/public && yarn test",
+    "dev:app:public": "wait-on \"http://localhost:${PORT:-3001}/\" && cd apps/public-reference && yarn dev",
+    "test:app:public": "wait-on \"http://localhost:${PORT:-3001}/\" && cd apps/public-reference && yarn test",
+    "dev:app:partners": "wait-on \"http://localhost:${PORT:-3001}/\" && cd apps/partners-reference && yarn dev",
+    "test:app:partners": "wait-on \"http://localhost:${PORT:-3001}/\" && cd apps/partners-reference && yarn test",
     "dev:listings": "cd services/listings && yarn dev",
+    "dev:backend": "cd backend/core && yarn dev",
     "dev:all": "concurrently \"yarn dev:listings\" \"yarn dev:app:public\"",
+    "dev:partners": "concurrently \"yarn dev:backend\" \"yarn dev:app:partners\"",
+    "new-version": "lerna version --conventional-commits --yes",
     "test:shared:ui": "cd shared/ui-components && yarn test",
-    "test:apps": "concurrently \"yarn dev:listings\" \"yarn test:app:public\""
+    "test:services:listings": "cd services/listings && yarn test",
+    "test:backend:core": "cd backend/core && yarn test",
+    "test:apps": "concurrently \"yarn dev:listings\" \"yarn test:app:public\"",
+    "lint": "eslint '**/*.ts' '**/*.tsx' '**/*.js'"
   },
   "devDependencies": {
-    "react": "16.8.6",
-    "@typescript-eslint/eslint-plugin": "^2.5.0",
-    "@typescript-eslint/parser": "^2.5.0",
-    "concurrently": "^5.0.0",
-    "eslint": "^6.5.1",
-    "eslint-config-prettier": "^6.4.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-react": "^7.16.0",
-    "husky": "^3.0.4",
-    "lint-staged": "^9.2.3",
-    "prettier": "^1.18.2",
-    "rimraf": "^3.0.0",
-    "typescript": "^3.6.2",
-    "wait-on": "^3.3.0"
+    "@storybook/react": "^5.3.14",
+    "@types/jest": "^25.2.2",
+    "@typescript-eslint/eslint-plugin": "^2.31.0",
+    "@typescript-eslint/parser": "^2.31.0",
+    "concurrently": "^5.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.3",
+    "husky": "^4.2.5",
+    "jest": "^25.5.4",
+    "lerna": "^3.22.1",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5",
+    "react": "16.13.1",
+    "react-test-renderer": "16.13.1",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^25.5.1",
+    "typescript": "^3.9.7",
+    "wait-on": "^5.1.0"
   },
   "prettier": {
     "singleQuote": false,
