@@ -10,6 +10,7 @@
       "apps/public-sf",
       "apps/partners-reference",
       "services/listings",
+      "services/listings-sf",
       "backend/core"
     ],
     "nohoist": [
@@ -29,9 +30,10 @@
     "dev:app:partners": "wait-on \"http://localhost:${PORT:-3001}/\" && cd apps/partners-reference && yarn dev",
     "test:app:partners": "wait-on \"http://localhost:${PORT:-3001}/\" && cd apps/partners-reference && yarn test",
     "dev:listings": "cd services/listings && yarn dev",
+    "dev:listings:sf": "cd services/listings-sf && yarn dev",
     "dev:backend": "cd backend/core && yarn dev",
     "dev:all": "concurrently \"yarn dev:listings\" \"yarn dev:app:public\"",
-    "dev:all:sf": "concurrently \"yarn dev:listings\" \"yarn dev:app:sf\"",
+    "dev:all:sf": "concurrently \"yarn dev:listings:sf\" \"yarn dev:app:sf\"",
     "dev:partners": "concurrently \"yarn dev:backend\" \"yarn dev:app:partners\"",
     "new-version": "lerna version --conventional-commits --yes",
     "test:shared:ui": "cd shared/ui-components && yarn test",
