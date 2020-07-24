@@ -53,7 +53,7 @@ export const BasicTable = (props: BasicTableProps) => {
     )
   })
 
-  const tableClasses = ["table-bloom", "w-full", "text-sm"]
+  const tableClasses = ["w-full", "text-sm"]
   if (props.responsiveCollapse) {
     tableClasses.push("responsive-collapse")
   }
