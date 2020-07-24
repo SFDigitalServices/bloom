@@ -1,4 +1,4 @@
-table {
+table.bloom-housing {
   @apply text-gray-750;
 
   strong {
@@ -22,7 +22,7 @@ table {
   }
 }
 
-table tr:nth-of-type(even) {
+table.bloom-housing tr:nth-of-type(even) {
   @apply bg-primary-lighter;
 }
 
@@ -60,7 +60,7 @@ https://www.cssscript.com/pure-html5-css3-responsive-table-solution/ */
 
 @media screen and (max-width: 639px) {
   table.responsive-collapse {
-    
+
     thead {
       @apply hidden;
     }
@@ -70,11 +70,11 @@ https://www.cssscript.com/pure-html5-css3-responsive-table-solution/ */
       @apply mb-6;
     }
 
-    
+
     tr:nth-of-type(even) {
       background: inherit;
     }
-    
+
     td:nth-of-type(even) {
       @apply bg-primary-lighter;
     }

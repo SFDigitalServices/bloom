@@ -2,14 +2,8 @@ import { Component } from "react"
 import Head from "next/head"
 import axios from "axios"
 import moment from "moment"
-import {
-  ListingsGroup,
-  ListingsList,
-  MetaTags,
-  PageHeader,
-  openDateState,
-  t,
-} from "@bloom-housing/ui-components"
+import { ListingsGroup, MetaTags, PageHeader, openDateState, t } from "@bloom-housing/ui-components"
+import { ListingsListSf } from "../src/page_components/ListingsListSf"
 import { Listing } from "@bloom-housing/core"
 import Layout from "../layouts/application"
 
@@ -44,7 +38,7 @@ export default class extends Component<ListingsProps> {
 
   renderOpenListings() {
     return this.props.openListings.length > 0 ? (
-      <ListingsList listings={this.props.openListings} />
+      <ListingsListSf listings={this.props.openListings} />
     ) : (
       <div className="notice-block">
         <h3 className="m-auto text-gray-800">{t("listings.noOpenListings")}</h3>

@@ -1,0 +1,40 @@
+.table-listing-summary {
+  td, th {
+    padding-bottom: 0.75rem;
+  }
+
+  td {
+    padding-top: 0.75rem;
+  }
+}
+
+.listing-summary-header-text {
+  font-family: "Lato",Helvetica,Arial,Verdana,sans-serif;
+  color: #767676;
+  font-size: .875rem;
+  line-height: 1.375;
+
+  &.left {
+    text-align: left;
+  }
+
+  &.right {
+    text-align: right;
+  }
+}
+
+.listing-summary-row {
+  border-bottom: 1px solid #aaa;
+}
+
+.summary-text-regular {
+  font-size: 1rem !important;
+  font-weight: 600;
+  color: #555;
+}
+
+.summary-text-tiny {
+  font-size: 0.8rem !important;
+  font-weight: 400;
+  color: #767676;
+}

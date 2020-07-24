@@ -10,10 +10,11 @@ export interface GroupedTableGroup {
 
 export interface GroupedTableProps extends BasicTableProps {
   data: GroupedTableGroup[]
+  tableClassName: string
 }
 
 export const GroupedTable = (props: GroupedTableProps) => {
-  const { headers, data, cellClassName } = props
+  const { headers, data, cellClassName, tableClassName } = props
 
   const headerLabels = Object.values(headers).map((col) => {
     const uniqKey = process.env.NODE_ENV === "test" ? "" : nanoid()
@@ -64,7 +65,7 @@ export const GroupedTable = (props: GroupedTableProps) => {
     })
   })
 
-  const tableClasses = ["w-full", "text-sm"]
+  const tableClasses = [tableClassName, "w-full", "text-sm"]
   if (props.responsiveCollapse) {
     tableClasses.push("responsive-collapse")
   }
@@ -80,3 +81,7 @@ export const GroupedTable = (props: GroupedTableProps) => {
     </div>
   )
 }
+
+GroupedTable.defaultProps = {
+  tableClassName: "table-bloom",
+} as Partial<GroupedTableProps>
