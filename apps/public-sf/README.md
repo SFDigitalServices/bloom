@@ -10,8 +10,8 @@ This is the beginning of a customized implementation for the DAHLIA SF version o
 ## Getting Started
 
 - `yarn install`
-- Copy `.env.template` to `.env.local` and edit variables appropriate to your local environment. S[ee the docs here](https://nextjs.org/docs/basic-features/environment-variables) for more detail on configuration options.
-- `yarn dev`
+- Copy `.env.template` to `.env.local` and edit variables appropriate to your local environment. [See the docs here](https://nextjs.org/docs/basic-features/environment-variables) for more detail on configuration options.
+- To run: `yarn dev:all:sf`
 
 ## Running end-to-end tests locally
 
