@@ -24,6 +24,7 @@ export default class extends Component<ListingsProps> {
 
     try {
       const response = await axios.get(process.env.listingServiceUrl)
+      console.log("response listings", response.data.listings)
       const nowTime = moment()
       openListings = response.data.listings.filter((listing: Listing) => {
         return (
@@ -36,6 +37,7 @@ export default class extends Component<ListingsProps> {
         return nowTime > moment(listing.applicationDueDate)
       })
     } catch (error) {
+      console.log("error was raised")
       console.log(error)
     }
 

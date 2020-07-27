@@ -39,11 +39,11 @@ interface ListingProps {
 export default class extends Component<ListingProps> {
   public static async getInitialProps({ query }) {
     const listingId = query.id
-    let listing = {}
+    let listing: Listing
 
     try {
-      const response = await axios.get(process.env.listingServiceUrl)
-      listing = response.data.listings.find((l) => l.id == listingId)
+      const response = await axios.get(`${process.env.listingServiceUrl}/listings/${listingId}`)
+      listing = response.data.listing
     } catch (error) {
       console.log(error)
     }
@@ -56,7 +56,6 @@ export default class extends Component<ListingProps> {
     const listing = this.props.listing
 
     const oneLineAddress = <OneLineAddress address={listing.buildingAddress} />
-
     const googleMapsHref =
       "https://www.google.com/maps/place/" + ReactDOMServer.renderToStaticMarkup(oneLineAddress)
 
@@ -67,22 +66,22 @@ export default class extends Component<ListingProps> {
       availability: t("t.availability"),
     }
 
-    const amiValues = listing.unitsSummarized.amiPercentages
-      .map((percent) => {
-        const percentInt = parseInt(percent, 10)
-        return percentInt
-      })
-      .sort()
-    const hmiHeaders = listing.unitsSummarized.hmi.columns as Headers
-    const hmiData = listing.unitsSummarized.hmi.rows
-    let groupedUnits: GroupedTableGroup[] = null
+    // const amiValues = listing.unitsSummarized.amiPercentages
+    //   .map((percent) => {
+    //     const percentInt = parseInt(percent, 10)
+    //     return percentInt
+    //   })
+    //   .sort()
+    // const hmiHeaders = listing.unitsSummarized.hmi.columns as Headers
+    // const hmiData = listing.unitsSummarized.hmi.rows
+    // let groupedUnits: GroupedTableGroup[] = null
 
-    if (amiValues.length == 1) {
-      groupedUnits = groupNonReservedAndReservedSummaries(
-        listing.unitsSummarized.byNonReservedUnitType,
-        listing.unitsSummarized.byReservedType
-      )
-    } // else condition is handled inline below
+    // if (amiValues.length == 1) {
+    //   groupedUnits = groupNonReservedAndReservedSummaries(
+    //     listing.unitsSummarized.byNonReservedUnitType,
+    //     listing.unitsSummarized.byReservedType
+    //   )
+    // } // else condition is handled inline below
 
     const occupancyDescription = getOccupancyDescription(listing)
     const occupancyHeaders = {
@@ -151,7 +150,7 @@ export default class extends Component<ListingProps> {
             <ApplicationStatus listing={listing} />
           </div>
 
-          <div className="w-full md:w-2/3 md:mt-6 md:mb-6 md:px-3 md:pr-8">
+          {/* <div className="w-full md:w-2/3 md:mt-6 md:mb-6 md:px-3 md:pr-8">
             {amiValues.length > 1 &&
               amiValues.map((percent) => {
                 const byAMI = listing.unitsSummarized.byAMI.find((item) => {
@@ -183,7 +182,7 @@ export default class extends Component<ListingProps> {
                 responsiveCollapse={true}
               />
             )}
-          </div>
+          </div> */}
           <div className="w-full md:w-2/3 md:mt-3 md:hidden md:mx-3">
             <ApplicationSection listing={listing} />
           </div>
@@ -200,7 +199,7 @@ export default class extends Component<ListingProps> {
                   title={t("listings.householdMaximumIncome")}
                   subtitle={t("listings.forIncomeCalculations")}
                 >
-                  <BasicTable headers={hmiHeaders} data={hmiData} responsiveCollapse={true} />
+                  {/* <BasicTable headers={hmiHeaders} data={hmiData} responsiveCollapse={true} /> */}
                 </ListSection>
 
                 <ListSection title={t("t.occupancy")} subtitle={occupancyDescription}>
@@ -234,9 +233,9 @@ export default class extends Component<ListingProps> {
                       </ExpandableText>
                     </InfoCard>
                     <InfoCard title={t("listings.criminalBackground")}>
-                      <ExpandableText className="text-sm text-gray-700">
+                      {/* <ExpandableText className="text-sm text-gray-700">
                         {listing.criminalBackground}
-                      </ExpandableText>
+                      </ExpandableText> */}
                     </InfoCard>
                     {buildingSelectionCriteria}
                   </>
@@ -277,7 +276,7 @@ export default class extends Component<ListingProps> {
                   <Description term={t("t.propertyAmenities")} description={listing.amenities} />
                   <Description term={t("t.unitAmenities")} description={listing.unitAmenities} />
                   <Description term={t("t.accessibility")} description={listing.accessibility} />
-                  <Description
+                  {/* <Description
                     term={t("t.unitFeatures")}
                     description={
                       <UnitTables
@@ -286,7 +285,7 @@ export default class extends Component<ListingProps> {
                         disableAccordion={listing.disableUnitsAccordion}
                       />
                     }
-                  />
+                  /> */}
                 </dl>
                 <AdditionalFees listing={listing} />
               </div>
@@ -300,7 +299,7 @@ export default class extends Component<ListingProps> {
               desktopClass="bg-primary-lighter"
             >
               <div className="listing-detail-panel">
-                <ListingMap address={listing.buildingAddress} listing={listing} />
+                {/* <ListingMap address={listing.buildingAddress} listing={listing} /> */}
               </div>
             </ListingDetailItem>
 
