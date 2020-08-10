@@ -31,15 +31,23 @@ import {
   t,
 } from "@bloom-housing/ui-components"
 import Layout from "../layouts/application"
-import Button, { ButtonStyle } from "../src/components/Button"
+import Button, { ButtonStyle, ButtonSize } from "../src/components/Button"
 
 interface ListingProps {
   listing: Listing
 }
 
-const StyledButton = ({ buttonStyle }: { buttonStyle: ButtonStyle }) => (
+const StyledButton = ({ buttonStyle, buttonSize }: { buttonStyle?: ButtonStyle, buttonSize?: ButtonSize }) => (
   <div className="my-1">
-    <Button buttonStyle={buttonStyle}>{buttonStyle}</Button>
+    <Button
+      buttonStyle={buttonStyle}
+      buttonSize={buttonSize}
+      onClick={(e) => console.log(buttonStyle)}
+    >
+      {buttonStyle || "default"}
+      -
+      {buttonSize || "regular"}
+    </Button>
   </div>
 )
 
@@ -56,14 +64,6 @@ export default class extends Component<ListingProps> {
     }
 
     return { listing }
-  }
-
-  buttonWithStyle(buttonStyle: ButtonStyle) {
-    return (
-      <div className="my-1">
-        <Button buttonStyle={buttonStyle}>{buttonStyle}</Button>
-      </div>
-    )
   }
 
   public render() {
@@ -204,12 +204,13 @@ export default class extends Component<ListingProps> {
           </div>
 
           <ListingDetails>
-            <StyledButton buttonStyle="default" />
+            <StyledButton />
             <StyledButton buttonStyle="primary" />
             <StyledButton buttonStyle="secondary" />
-            <StyledButton buttonStyle="primary-small" />
-            <StyledButton buttonStyle="secondary-small" />
             <StyledButton buttonStyle="borderless" />
+            <StyledButton buttonStyle="primary" buttonSize="small" />
+            <StyledButton buttonStyle="secondary" buttonSize="small" />
+            <StyledButton buttonStyle="borderless" buttonSize="small" />
             <ListingDetailItem
               imageAlt="eligibility-notebook"
               imageSrc="/images/listing-eligibility.svg"

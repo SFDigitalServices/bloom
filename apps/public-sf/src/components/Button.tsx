@@ -1,10 +1,12 @@
 import * as React from "react"
 import tw, { styled, css } from 'twin.macro'
 
-export type ButtonStyle = "default" | "primary" | "secondary" | "primary-small" | "secondary-small" | "borderless"
+export type ButtonStyle = "default" | "primary" | "secondary" | "borderless"
+export type ButtonSize = "default" | "regular" | "small"
 
 export interface ButtonProps {
   buttonStyle?: ButtonStyle
+  buttonSize?: ButtonSize
   children: React.ReactNode
   onClick?: (e: React.MouseEvent) => void
 }
@@ -41,10 +43,6 @@ const _primaryStyle = css`
   ${tw`bg-primary-dark text-white hover:bg-primary-darker`}
 `
 
-const _primarySmallStyle = css`${_primaryStyle} ${_smallStyle}`
-
-const _secondarySmallStyle = css`${_secondaryStyle} ${_smallStyle}`
-
 const _borderLessStyle = css`
   ${_primaryStyle}
   border-color: transparent;
@@ -62,29 +60,31 @@ const GetStyleFromkey = (styleKey: ButtonStyle) => {
     case 'default':
     case 'primary':
       return _primaryStyle
-    case 'primary-small':
-      return _primarySmallStyle
     case 'secondary':
       return _secondaryStyle
-    case 'secondary-small':
-      return _secondarySmallStyle
     case 'borderless':
       return _borderLessStyle
   }
 }
 
-const StyledButton = styled.button<{ buttonStyle: ButtonStyle }>`
+const StyledButton = styled.button<{ buttonStyle: ButtonStyle, buttonSize: ButtonSize }>`
   ${props => GetStyleFromkey(props.buttonStyle)}
+  ${props => props.buttonSize == "small" && _smallStyle}
 `
 
-const Button = ({ buttonStyle, children, onClick }: ButtonProps) => (
-  <StyledButton buttonStyle={buttonStyle} onClick={onClick}>
+const Button = ({ buttonStyle, buttonSize, children, onClick }: ButtonProps) => (
+  <StyledButton
+    buttonStyle={buttonStyle}
+    buttonSize={buttonSize}
+    onClick={onClick}
+  >
     {children}
   </StyledButton>
 )
 
 Button.defaultProps = {
   buttonStyle: "default",
+  buttonSize: "default",
 } as Partial<ButtonProps>
 
 export { Button as default, Button }
