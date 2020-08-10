@@ -31,10 +31,17 @@ import {
   t,
 } from "@bloom-housing/ui-components"
 import Layout from "../layouts/application"
+import Button, { ButtonStyle } from "../src/components/Button"
 
 interface ListingProps {
   listing: Listing
 }
+
+const StyledButton = ({ buttonStyle }: { buttonStyle: ButtonStyle }) => (
+  <div className="my-1">
+    <Button buttonStyle={buttonStyle}>{buttonStyle}</Button>
+  </div>
+)
 
 export default class extends Component<ListingProps> {
   public static async getInitialProps({ query }) {
@@ -49,6 +56,14 @@ export default class extends Component<ListingProps> {
     }
 
     return { listing }
+  }
+
+  buttonWithStyle(buttonStyle: ButtonStyle) {
+    return (
+      <div className="my-1">
+        <Button buttonStyle={buttonStyle}>{buttonStyle}</Button>
+      </div>
+    )
   }
 
   public render() {
@@ -187,7 +202,14 @@ export default class extends Component<ListingProps> {
           <div className="w-full md:w-2/3 md:mt-3 md:hidden md:mx-3">
             <ApplicationSection listing={listing} />
           </div>
+
           <ListingDetails>
+            <StyledButton buttonStyle="default" />
+            <StyledButton buttonStyle="primary" />
+            <StyledButton buttonStyle="secondary" />
+            <StyledButton buttonStyle="primary-small" />
+            <StyledButton buttonStyle="secondary-small" />
+            <StyledButton buttonStyle="borderless" />
             <ListingDetailItem
               imageAlt="eligibility-notebook"
               imageSrc="/images/listing-eligibility.svg"

@@ -76,5 +76,9 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx}": "eslint"
+  },
+  "dependencies": {
+    "@types/styled-components": "^5.1.2",
+    "styled-components": "^5.1.1"
   }
 }
