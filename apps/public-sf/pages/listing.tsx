@@ -31,25 +31,14 @@ import {
   t,
 } from "@bloom-housing/ui-components"
 import Layout from "../layouts/application"
-import Button, { ButtonStyle, ButtonSize } from "../src/components/Button"
+import BaseButton from "../src/components/BaseButton"
+import PrimaryButton from "../src/components/PrimaryButton"
+import SecondaryButton from "../src/components/SecondaryButton"
+import BorderlessButton from "../src/components/BorderlessButton"
 
 interface ListingProps {
   listing: Listing
 }
-
-const StyledButton = ({ buttonStyle, buttonSize }: { buttonStyle?: ButtonStyle, buttonSize?: ButtonSize }) => (
-  <div className="my-1">
-    <Button
-      buttonStyle={buttonStyle}
-      buttonSize={buttonSize}
-      onClick={(e) => console.log(buttonStyle)}
-    >
-      {buttonStyle || "default"}
-      -
-      {buttonSize || "regular"}
-    </Button>
-  </div>
-)
 
 export default class extends Component<ListingProps> {
   public static async getInitialProps({ query }) {
@@ -204,13 +193,46 @@ export default class extends Component<ListingProps> {
           </div>
 
           <ListingDetails>
-            <StyledButton />
-            <StyledButton buttonStyle="primary" />
-            <StyledButton buttonStyle="secondary" />
-            <StyledButton buttonStyle="borderless" />
-            <StyledButton buttonStyle="primary" buttonSize="small" />
-            <StyledButton buttonStyle="secondary" buttonSize="small" />
-            <StyledButton buttonStyle="borderless" buttonSize="small" />
+            <div className="my-1">
+              <BaseButton onClick={(e) => console.log("BaseButton clicked")}>
+                BaseButton
+              </BaseButton>
+            </div>
+            <div className="my-1">
+              <PrimaryButton onClick={(e) => console.log("PrimaryButton clicked")}>
+                Primary
+              </PrimaryButton>
+            </div>
+            <div className="my-1">
+              <SecondaryButton onClick={(e) => console.log("SecondaryButton clicked")}>
+                Secondary
+              </SecondaryButton>
+            </div>
+            <div className="my-1">
+              <BorderlessButton onClick={(e) => console.log("BorderlessButton clicked")}>
+                Borderless
+              </BorderlessButton>
+            </div>
+            <div className="my-1">
+              <BaseButton buttonSize="small" onClick={(e) => console.log("BaseButton clicked")}>
+                BaseButton small
+              </BaseButton>
+            </div>
+            <div className="my-1">
+              <PrimaryButton buttonSize="small" onClick={(e) => console.log("PrimaryButton clicked")}>
+                Primary small
+              </PrimaryButton>
+            </div>
+            <div className="my-1">
+              <SecondaryButton buttonSize="small" onClick={(e) => console.log("SecondaryButton clicked")}>
+                Secondary small
+              </SecondaryButton>
+            </div>
+            <div className="my-1">
+              <BorderlessButton buttonSize="small" onClick={(e) => console.log("BorderlessButton clicked")}>
+                Borderless small
+              </BorderlessButton>
+            </div>
             <ListingDetailItem
               imageAlt="eligibility-notebook"
               imageSrc="/images/listing-eligibility.svg"
