@@ -1,5 +1,5 @@
 import * as React from "react"
-import tw, { styled, css } from 'twin.macro'
+import tw, { styled } from 'twin.macro'
 
 export type ButtonSize = "default" | "regular" | "small"
 
@@ -10,7 +10,25 @@ export interface ButtonProps {
   onClick?: (e: React.MouseEvent) => void
 }
 
-const StyledButton = styled.button<ButtonProps>`
+const defaultProps = {
+  buttonSize: "default",
+} as Partial<ButtonProps>
+
+
+const UnstyledButton = ({ className, children, onClick }: ButtonProps) => (
+  <button
+    className={className}
+    onClick={onClick}
+  >
+    {children}
+  </button>
+)
+
+/*
+ * This should never be used directly in the product, instead, you should use the components
+ * that build off of this, like PrimaryButton or SecondaryButton.
+ */
+const BaseButton = styled(UnstyledButton)<ButtonProps>`
   ${tw`
     border-2
     border-primary
@@ -31,22 +49,6 @@ const StyledButton = styled.button<ButtonProps>`
   ${props => props.buttonSize == "small" && tw`text-xs px-6 py-3`}
 `
 
-/*
- * This should never be used directly in the product, instead, you should use the components
- * that build off of this, like PrimaryButton or SecondaryButton.
- */
-const BaseButton = ({ className, buttonSize, children, onClick }: ButtonProps) => (
-  <StyledButton
-    className={className}
-    buttonSize={buttonSize}
-    onClick={onClick}
-  >
-    {children}
-  </StyledButton>
-)
-
-BaseButton.defaultProps = {
-  buttonSize: "default",
-} as Partial<ButtonProps>
+BaseButton.defaultProps = defaultProps
 
 export { BaseButton as default, BaseButton }
