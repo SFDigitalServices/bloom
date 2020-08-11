@@ -31,6 +31,10 @@ import {
   t,
 } from "@bloom-housing/ui-components"
 import Layout from "../layouts/application"
+import BaseButton from "../src/components/BaseButton"
+import PrimaryButton from "../src/components/PrimaryButton"
+import SecondaryButton from "../src/components/SecondaryButton"
+import BorderlessButton from "../src/components/BorderlessButton"
 
 interface ListingProps {
   listing: Listing
@@ -187,7 +191,48 @@ export default class extends Component<ListingProps> {
           <div className="w-full md:w-2/3 md:mt-3 md:hidden md:mx-3">
             <ApplicationSection listing={listing} />
           </div>
+
           <ListingDetails>
+            <div className="my-1">
+              <BaseButton onClick={(e) => console.log("BaseButton clicked")}>
+                BaseButton
+              </BaseButton>
+            </div>
+            <div className="my-1">
+              <PrimaryButton onClick={(e) => console.log("PrimaryButton clicked")}>
+                Primary
+              </PrimaryButton>
+            </div>
+            <div className="my-1">
+              <SecondaryButton onClick={(e) => console.log("SecondaryButton clicked")}>
+                Secondary
+              </SecondaryButton>
+            </div>
+            <div className="my-1">
+              <BorderlessButton onClick={(e) => console.log("BorderlessButton clicked")}>
+                Borderless
+              </BorderlessButton>
+            </div>
+            <div className="my-1">
+              <BaseButton buttonSize="small" onClick={(e) => console.log("BaseButton clicked")}>
+                BaseButton small
+              </BaseButton>
+            </div>
+            <div className="my-1">
+              <PrimaryButton buttonSize="small" onClick={(e) => console.log("PrimaryButton clicked")}>
+                Primary small
+              </PrimaryButton>
+            </div>
+            <div className="my-1">
+              <SecondaryButton buttonSize="small" onClick={(e) => console.log("SecondaryButton clicked")}>
+                Secondary small
+              </SecondaryButton>
+            </div>
+            <div className="my-1">
+              <BorderlessButton buttonSize="small" onClick={(e) => console.log("BorderlessButton clicked")}>
+                Borderless small
+              </BorderlessButton>
+            </div>
             <ListingDetailItem
               imageAlt="eligibility-notebook"
               imageSrc="/images/listing-eligibility.svg"
