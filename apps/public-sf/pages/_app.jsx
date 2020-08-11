@@ -10,6 +10,7 @@ import {
 import { headScript, bodyTopTag, pageChangeHandler } from "../src/customScripts"
 import { AppSubmissionContext, blankApplication } from "../lib/AppSubmissionContext"
 import { loadApplicationFromAutosave, loadSavedListing } from "../lib/ApplicationConductor"
+import 'tailwindcss/dist/base.min.css'
 
 class MyApp extends App {
   constructor(props) {
